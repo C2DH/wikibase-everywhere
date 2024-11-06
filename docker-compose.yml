@@ -6,6 +6,7 @@ services:
   # --------------------------------------------------
 
   wikibase:
+    platform: linux/amd64
     image: wikibase/wikibase:3
     depends_on:
       mysql:
@@ -39,6 +40,7 @@ services:
       start_period: 5m
 
   wikibase-jobrunner:
+    platform: linux/amd64
     image: wikibase/wikibase:3
     command: /jobrunner-entrypoint.sh
     depends_on:
@@ -49,6 +51,7 @@ services:
       - wikibase
 
   mysql:
+    platform: linux/amd64
     image: mariadb:10.11
     restart: unless-stopped
     volumes:
@@ -72,6 +75,7 @@ services:
   # the elasticsearch service, and the MW_ELASTIC_* vars from wikibase_variables
   # at the top of this file.
   elasticsearch:
+    platform: linux/amd64
     image: wikibase/elasticsearch:1
     restart: unless-stopped
     volumes:
@@ -85,6 +89,7 @@ services:
       start_period: 2m
 
   wdqs:
+    platform: linux/amd64
     image: wikibase/wdqs:1
     command: /runBlazegraph.sh
     depends_on:
@@ -106,6 +111,7 @@ services:
       start_period: 2m
 
   wdqs-updater:
+    platform: linux/amd64
     image: wikibase/wdqs:1
     command: /runUpdate.sh
     depends_on:
@@ -121,6 +127,7 @@ services:
         hard: 32768
 
   wdqs-proxy:
+    platform: linux/amd64
     image: wikibase/wdqs-proxy:1
     depends_on:
       wdqs:
@@ -128,6 +135,7 @@ services:
     restart: unless-stopped
 
   wdqs-frontend:
+    platform: linux/amd64
     image: wikibase/wdqs-frontend:1
     depends_on:
       - wdqs-proxy
@@ -147,6 +155,7 @@ services:
       start_period: 2m
 
   quickstatements:
+    platform: linux/amd64
     image: wikibase/quickstatements:1
     depends_on:
       wikibase:
@@ -174,6 +183,7 @@ services:
   # --------------------------------------------------
 
   traefik:
+    platform: linux/amd64
     image: traefik:3.1
     command:
       # Basic setup
