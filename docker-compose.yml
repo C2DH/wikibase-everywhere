@@ -165,6 +165,7 @@ services:
       - 8840:80
     volumes:
       - quickstatements-data:/quickstatements/data
+      - ./config/quickstatements/oauth.php:/var/www/html/magnustools/public_html/php/oauth.php
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.quickstatements.rule=Host(`${QUICKSTATEMENTS_PUBLIC_HOST}`)"

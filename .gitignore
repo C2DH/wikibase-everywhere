@@ -1,4 +1,6 @@
 !config/.gitkeep
-config/*
+!config/quickstatements/oauth.php
+config/LocalSettings.php
+config/wikibase-php.ini
 
 .env
