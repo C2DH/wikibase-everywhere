@@ -1,0 +1,42 @@
+{
+    "version": "2.0",
+    "mediawiki": {
+      "name": "",
+      "root": "http://wikibase.example.com/wiki/",
+      "main_page": "http://wikibase.example.com/wiki/Main_Page",
+      "api": "http://wikibase.example.com/w/api.php"
+    },
+    "wikibase": {
+      "site_iri": "http://wikibase.example.com/entity/",
+      "maxlag": 5,
+      "max_edits_per_minute": 60,
+      "tag": "openrefine-${version}",
+      "properties": {
+        "instance_of": "P1",
+        "subclass_of": "P2"
+      },
+      "constraints": {
+      }
+    },
+    "oauth": {
+      "registration_page": "http://wikibase.example.com/wiki/Special:OAuthConsumerRegistration/propose"
+    },
+    "entity_types": {
+      "item": {
+         "site_iri": "http://wikibase.example.com/entity/",
+         "reconciliation_endpoint": "http://localhost:8000/${lang}/api",
+         "mediawiki_api": "http://wikibase.example.com/w/api.php"
+      },
+      "property": {
+         "site_iri": "http://wikibase.example.com/entity/",
+         "mediawiki_api": "http://wikibase.example.com/w/api.php"
+      },
+      "mediainfo": {
+         "site_iri": "http://wikibase.example.com/entity/",
+         "reconciliation_endpoint": "http://localhost:8000/${lang}/api"
+      }
+    },
+    "editgroups": {
+      "url_schema": ""
+    }
+  }
