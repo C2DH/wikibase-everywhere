@@ -14,11 +14,12 @@ services:
     restart: unless-stopped
     ports:
       - 8880:80
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wikibase.rule=Host(`${WIKIBASE_PUBLIC_HOST}`)"
-      # - "traefik.http.routers.wikibase.entrypoints=websecure"
-      # - "traefik.http.routers.wikibase.tls.certresolver=letsencrypt"
+      #- "traefik.http.routers.quickstatements.entrypoints=web"
+  
     volumes:
       - ./config:/config
       - wikibase-image-data:/var/www/html/images
@@ -105,6 +106,8 @@ services:
         hard: 32768
     volumes:
       - wdqs-data:/wdqs/data
+    ports:
+      - 9999:9999
     healthcheck:
       test: curl --silent --fail localhost:9999/bigdata/namespace/wdq/sparql
       interval: 10s
@@ -118,6 +121,9 @@ services:
       wdqs:
         condition: service_healthy
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.wdqs-updater.loadbalancer.server.port=9999" 
     # Set number of files ulimit high enough, otherwise blazegraph will abort with:
     # library initialization failed - unable to allocate file descriptor table - out of memory
     # Appeared on Docker 24.0.5, containerd 1.7.9, Linux 6.6.6, NixOS 23.11
@@ -145,8 +151,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wdqs-frontend.rule=Host(`${WDQS_FRONTEND_PUBLIC_HOST}`)"
-      - "traefik.http.routers.wdqs-frontend.entrypoints=websecure"
-      - "traefik.http.routers.wdqs-frontend.tls.certresolver=letsencrypt"
+      #- "traefik.http.routers.quickstatements.entrypoints=web"
+      #- "traefik.http.routers.wdqs-frontend.entrypoints=web"
+      #- "traefik.http.routers.wdqs-frontend.tls.certresolver=letsencrypt"
     environment:
       WDQS_HOST: wdqs-proxy
     healthcheck:
@@ -169,8 +176,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.quickstatements.rule=Host(`${QUICKSTATEMENTS_PUBLIC_HOST}`)"
-      # - "traefik.http.routers.quickstatements.entrypoints=websecure"
-      # - "traefik.http.routers.quickstatements.tls.certresolver=letsencrypt"
+      #- "traefik.http.routers.quickstatements.entrypoints=web"
+ 
     environment:
       QUICKSTATEMENTS_PUBLIC_URL: http://${QUICKSTATEMENTS_PUBLIC_HOST}
       WIKIBASE_PUBLIC_URL: http://${WIKIBASE_PUBLIC_HOST}
@@ -188,16 +195,10 @@ services:
     image: traefik:3.1
     command:
       # Basic setup
+      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--api.insecure=true"
-      # Redirects are no longer needed since we're not handling HTTPS
-
-    labels:
-      - "traefik.http.routers.wikibase.rule=Host(`wikibase.example.com`)"
-      - "traefik.http.routers.wikibase.entrypoints=web"
-
+      - "--entryPoints.web.address=:80"
     ports:
       - 80:80
       - 8080:8080
@@ -243,3 +244,4 @@ volumes:
   elasticsearch-data:
   # C. REVERSE PROXY AND SSL SERVICES DATA
   traefik-letsencrypt-data:
+
