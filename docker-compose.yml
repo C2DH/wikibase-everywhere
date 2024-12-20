@@ -212,7 +212,7 @@ services:
       - "6379"
 
   openrefine-wikibase:
-    image: c2dhunilu/onilu/enrefine-wikibase:latest
+    image: registry.gitlab.com/nfdi4culture/openrefine-reconciliation-services/openrefine-wikibase:latest
     container_name: openrefine_wikibase
     ports:
       - 8000:8000
