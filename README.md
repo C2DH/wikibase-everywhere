@@ -4,7 +4,7 @@ Welcome to the Wikibase Everywhere project! This project aims to provide a simpl
 
 ## Installation
 
-Create a.env file containing:
+Copy the .env.example to .env and modify the following variables:
 
 ```bash
 DB_NAME=wikibase
