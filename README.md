@@ -31,7 +31,18 @@ If you're testing locally, please add the following lines to your `/etc/hosts` f
 Then run the following commands:
 
 ```bash
-docker-compose up -d
+docker-compose up
+```
+
+Thee installation will now copy two files in you r local config folder. Stop docker and modify them:
+
+```bash
+docker-compose down
+```
+e.g. modify the server host in  `./config/LocalSettings.php` according to your configuration:
+
+```php
+$wgServer = 'http://wikibase.example.com';
 ```
 
 ## Deploymnet
